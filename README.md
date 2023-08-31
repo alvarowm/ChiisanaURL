@@ -19,6 +19,11 @@ port_redis=6379
 password_size=8
 ```
 
+* chars -> Conjunto de chars usado para geração de senha e URLs;
+* base_url -> Parte inicial da URL imutável, normalmente seu host;
+* path_length -> Tamanho do path que vem após base_url;
+* password_size -> tamanho do password gerado com base em chars;
+
 Para inicializar o encurtador com o seu arquivo properties :
 ```
 chiisanaURL.exe -properties application.properties
