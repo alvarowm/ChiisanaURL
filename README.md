@@ -1,4 +1,4 @@
-#ChiisanaURL - 小さなURL
+# ChiisanaURL - 小さなURL
 
 Um encurtador de URL leve, simples e feito em RUST com suporte a senhas e URLs customizadas.
 
