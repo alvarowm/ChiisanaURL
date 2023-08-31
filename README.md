@@ -29,6 +29,8 @@ Para inicializar o encurtador com o seu arquivo properties :
 chiisanaURL.exe -properties application.properties
 ```
 
+Caso não seja indicado um arquivo, o programa irá procurar o arquivo no mesmo local do executável.
+
 O sistema tem 5 endpoints:
 
 * POST com payload "Request" em / que cria a URL encurtada com base em url;
