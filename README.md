@@ -51,8 +51,10 @@ Request -> {
     "url" : "https://www.linkedin.com/in/alvarowm/",
     "custom_path" :"MEU_LINK"
 }
+```
 
 Resposta:
+```
 Response -> {
     "url" : "localhost/12X34",
     "password" :"S3PYF4,E"
