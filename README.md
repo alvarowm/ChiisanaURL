@@ -22,12 +22,12 @@ chiisanaURL.exe -properties application.properties
 '''
 
 O sistema tem 5 endpoints:
-POST com payload "Request" em / que cria a URL encurtada com base em url;
-POST com payload "Request" em /custom quer cria u URL encurtada customizada caso não exista ainda a URL;
-POST com payload "Request" em /password que cria a URL encurtada com base em url e devolve a senha;
-POST com payload "Request" em /post_password_custom_url que cria a URL encurtada com base em custom_path e devolve a senha;
-POST com payload "PasswordRequest" em /code devolve a URL curta com base em password;
-GET que recebe uma String representando o path encurtado em / e devolve url.
+* POST com payload "Request" em / que cria a URL encurtada com base em url;
+* POST com payload "Request" em /custom quer cria u URL encurtada customizada caso não exista ainda a URL;
+* POST com payload "Request" em /password que cria a URL encurtada com base em url e devolve a senha;
+* POST com payload "Request" em /post_password_custom_url que cria a URL encurtada com base em custom_path e devolve a senha;
+* POST com payload "PasswordRequest" em /code devolve a URL curta com base em password;
+* GET que recebe uma String representando o path encurtado em / e devolve url.
 
 Payloads:
 '''
