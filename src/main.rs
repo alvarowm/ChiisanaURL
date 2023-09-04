@@ -24,7 +24,6 @@ static PROPERTIES_FILE: Lazy<Mutex<OnceCell<String>>> = Lazy::new(||Mutex::from(
 
 #[tokio::main]
 async fn main() {
-    env::set_var("RUST_BACKTRACE", "1");
     let args: Vec<String> = env::args().collect();
 
     if !args.is_empty() && args.len() >= 2{
