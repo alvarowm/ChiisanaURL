@@ -13,11 +13,12 @@ pub async fn post_url(r: Request) -> Result<impl warp::Reply, warp::Rejection> {
         url_redis = redis_handler::get_value(&generated_url, &STATIC_CONFIG.lock().unwrap());
     }
 
-    if !r.url.contains("/"){
-        r.url.to_owned().push_str("/");
+    let mut url:String = r.url;
+    if !url.contains("/"){
+        url.push_str("/");
     }
 
-    redis_handler::set_value(&generated_url, &r.url, &STATIC_CONFIG.lock().unwrap());
+    redis_handler::set_value(&generated_url, &url, &STATIC_CONFIG.lock().unwrap());
 
     return Ok(reply::json(&generated_url));
 }
@@ -27,6 +28,7 @@ pub async fn post_custom_url(r: Request) -> Result<impl warp::Reply, warp::Rejec
 
     let url_redis = redis_handler::get_value(&custom_url, &STATIC_CONFIG.lock().unwrap());
 
+
     if !url_redis.is_empty() {
         return Ok(reply::with_status(
             reply::json(&custom_url),
@@ -34,7 +36,12 @@ pub async fn post_custom_url(r: Request) -> Result<impl warp::Reply, warp::Rejec
         ));
     }
 
-    redis_handler::set_value(&custom_url, &r.url, &STATIC_CONFIG.lock().unwrap());
+    let mut url:String = r.url;
+    if !url.contains("/"){
+        url.push_str("/");
+    }
+
+    redis_handler::set_value(&custom_url, &url, &STATIC_CONFIG.lock().unwrap());
 
     return Ok(reply::with_status(reply::json(&custom_url), StatusCode::OK));
 }
@@ -49,8 +56,13 @@ pub async fn post_password_url(r: Request) -> Result<impl warp::Reply, warp::Rej
         url_redis = redis_handler::get_value(&generated_url, &STATIC_CONFIG.lock().unwrap());
     }
 
+    let mut url:String = r.url;
+    if !url.contains("/"){
+        url.push_str("/");
+    }
+
     redis_handler::set_value(&generated_url, &password, &STATIC_CONFIG.lock().unwrap());
-    redis_handler::set_value(&password, &r.url, &STATIC_CONFIG.lock().unwrap());
+    redis_handler::set_value(&password, &url, &STATIC_CONFIG.lock().unwrap());
 
     let resp = Response {
         url: generated_url,
@@ -73,8 +85,13 @@ pub async fn post_password_custom_url(r: Request) -> Result<impl warp::Reply, wa
         ));
     }
 
+    let mut url:String = r.url;
+    if !url.contains("/"){
+        url.push_str("/");
+    }
+
     redis_handler::set_value(&custom_url, &password, &STATIC_CONFIG.lock().unwrap());
-    redis_handler::set_value(&password, &r.url, &STATIC_CONFIG.lock().unwrap());
+    redis_handler::set_value(&password, &url, &STATIC_CONFIG.lock().unwrap());
 
     let resp = Response {
         url: custom_url,
