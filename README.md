@@ -7,7 +7,7 @@ Todo cache das URLs é feito em Redis visando um melhor desempenho.
 ChiisanaURL é customizável por meio de um arquivo properties que segue o padrão Java. Ex:
 
 ```
-chars=ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._~:?#@!$&'*+,;=
+chars=ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._~?#@!$&'*+,;=
 path_length=4
 base_url=localhost/
 port=8080
