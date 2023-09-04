@@ -13,14 +13,19 @@ pub async fn post_url(r: Request) -> Result<impl warp::Reply, warp::Rejection> {
         url_redis = redis_handler::get_value(&generated_url, &STATIC_CONFIG.lock().unwrap());
     }
 
-    let mut url:String = r.url;
-    if !url.contains("/"){
-        url.push_str("/");
-    }
+    let url = set_url_with_slash(r);
 
     redis_handler::set_value(&generated_url, &url, &STATIC_CONFIG.lock().unwrap());
 
     return Ok(reply::json(&generated_url));
+}
+
+fn set_url_with_slash(r: Request) -> String {
+    let mut url: String = r.url;
+    if !url.contains("/") {
+        url.push_str("/");
+    }
+    url
 }
 
 pub async fn post_custom_url(r: Request) -> Result<impl warp::Reply, warp::Rejection> {
@@ -36,10 +41,7 @@ pub async fn post_custom_url(r: Request) -> Result<impl warp::Reply, warp::Rejec
         ));
     }
 
-    let mut url:String = r.url;
-    if !url.contains("/"){
-        url.push_str("/");
-    }
+    let url = set_url_with_slash(r);
 
     redis_handler::set_value(&custom_url, &url, &STATIC_CONFIG.lock().unwrap());
 
@@ -56,10 +58,7 @@ pub async fn post_password_url(r: Request) -> Result<impl warp::Reply, warp::Rej
         url_redis = redis_handler::get_value(&generated_url, &STATIC_CONFIG.lock().unwrap());
     }
 
-    let mut url:String = r.url;
-    if !url.contains("/"){
-        url.push_str("/");
-    }
+    let url = set_url_with_slash(r);
 
     redis_handler::set_value(&generated_url, &password, &STATIC_CONFIG.lock().unwrap());
     redis_handler::set_value(&password, &url, &STATIC_CONFIG.lock().unwrap());
@@ -85,10 +84,7 @@ pub async fn post_password_custom_url(r: Request) -> Result<impl warp::Reply, wa
         ));
     }
 
-    let mut url:String = r.url;
-    if !url.contains("/"){
-        url.push_str("/");
-    }
+    let url = set_url_with_slash(r);
 
     redis_handler::set_value(&custom_url, &password, &STATIC_CONFIG.lock().unwrap());
     redis_handler::set_value(&password, &url, &STATIC_CONFIG.lock().unwrap());
