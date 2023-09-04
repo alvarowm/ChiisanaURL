@@ -3,7 +3,7 @@ name: Build
 
 on:
   push:
-    branches: [main]
+    branches: [master]
 
 jobs:
   build:
@@ -22,5 +22,5 @@ jobs:
         with:
           name: Binary
           path: |
-            ${{ steps.compile.outputs.BUILT_ARCHIVE }}
-            ${{ steps.compile.outputs.BUILT_CHECKSUM }}
+            ./target/
+            
