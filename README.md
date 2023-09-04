@@ -1,6 +1,6 @@
 # ChiisanaURL - 小さなURL
 
-Um encurtador de URL leve, simples e feito em RUST com suporte a senhas e URLs customizadas.
+Um encurtador de URL leve, simples, customizável e feito em RUST com suporte a senhas e URLs customizadas.
 
 Todo cache das URLs é feito em Redis visando um melhor desempenho.
 
