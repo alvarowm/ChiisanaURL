@@ -13,6 +13,10 @@ pub async fn post_url(r: Request) -> Result<impl warp::Reply, warp::Rejection> {
         url_redis = redis_handler::get_value(&generated_url, &STATIC_CONFIG.lock().unwrap());
     }
 
+    if !r.url.contains("/"){
+        r.url.to_owned().push_str("/");
+    }
+
     redis_handler::set_value(&generated_url, &r.url, &STATIC_CONFIG.lock().unwrap());
 
     return Ok(reply::json(&generated_url));
