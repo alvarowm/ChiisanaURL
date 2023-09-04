@@ -6,7 +6,6 @@ Todo cache das URLs é feito em Redis visando um melhor desempenho.
 
 ChiisanaURL é customizável por meio de um arquivo properties que segue o padrão Java. Ex:
 
-
 ```
 chars=ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._~:?#@!$&'*+,;=
 path_length=4
@@ -19,7 +18,7 @@ port_redis=6379
 password_size=8
 ```
 
-* chars -> Conjunto de chars usado para geração de senha e URLs;
+* chars -> Conjunto de chars usado para geração de senhas e URLs;
 * base_url -> Parte inicial da URL imutável, normalmente seu host;
 * path_length -> Tamanho do path que vem após base_url;
 * password_size -> tamanho do password gerado com base em chars;
