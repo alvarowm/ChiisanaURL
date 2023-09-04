@@ -3,6 +3,8 @@ name = "chiisana_url"
 version = "0.0.1"
 authors = ["Alvaro <alvaromello@PREFEITURA.SP.GOV.BR>"]
 edition = "2018"
+readme = "https://github.com/alvarowm/ChiisanaURL/blob/master/README.md"
+repository = "https://github.com/alvarowm/ChiisanaURL"
 [dependencies]
 rand = "0.8.5"
 java-properties = "2.0.0"
