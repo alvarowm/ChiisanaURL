@@ -1,5 +1,6 @@
 use redis::Commands;
 use std::collections::HashMap;
+use std::sync::Mutex;
 
 fn setup_and_get_client(
     redis_endpoint: &str,
@@ -26,16 +27,15 @@ fn setup_and_get_client(
             redis::Client::open("redis://".to_owned() + redis_endpoint + ":" + redis_port + "/")
                 .unwrap();
     }
-
     return client;
 }
 
-pub fn set_value(key: &str, value: &str, config: &HashMap<String, String>) {
+pub fn set_value(key: &str, value: &str, config: &Mutex<HashMap<String, String>>) {
     let mut client = get_client(config);
     let _: () = client.set(key, value).unwrap();
 }
 
-pub fn get_value(key: &str, config: &HashMap<String, String>) -> String {
+pub fn get_value(key: &str, config: &Mutex<HashMap<String, String>>) -> String {
     let mut client = get_client(config);
 
     if client.exists(key).expect("Redis error!") {
@@ -45,12 +45,20 @@ pub fn get_value(key: &str, config: &HashMap<String, String>) -> String {
     return "".to_owned();
 }
 
-fn get_client(config: &HashMap<String, String>) -> redis::Client {
+fn get_client(config: &Mutex<HashMap<String, String>>) -> redis::Client {
+
+    let binding = config.lock().unwrap();
+
+    let redis_endpoint: &str = binding.get("endpoint_redis").unwrap();
+    let redis_port: &str = binding.get("port_redis").unwrap();
+    let redis_user: &str = binding.get("user_redis").unwrap();
+    let redis_password: &str = binding.get("password_redis").unwrap();
+
     let client = setup_and_get_client(
-        config.get("endpoint_redis").unwrap(),
-        config.get("port_redis").unwrap(),
-        config.get("user_redis").unwrap(),
-        config.get("password_redis").unwrap(),
+        redis_endpoint,
+        redis_port,
+        redis_user,
+        redis_password,
     );
 
     return client;

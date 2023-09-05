@@ -2,7 +2,7 @@ use warp::{Filter};
 use warp::http::{header, Method};
 use crate::{bodies, get_actions, post_actions, socket_factory};
 
-pub async fn set_and_start_server()
+pub async fn set_and_start_server(port:u16)
 {
     let post_url_route = warp::post()
         .and(warp::path::end())
@@ -51,8 +51,7 @@ pub async fn set_and_start_server()
         .or(post_password_get_url_route)
         .or(get_url_route).with(cors);
 
-    let socket = socket_factory::of();
+    let socket = socket_factory::of(port);
 
     warp::serve(routes).run(socket).await;
-
 }

@@ -106,7 +106,7 @@ name = "chiisana_url"
 version = "0.0.1"
 dependencies = [
  "java-properties",
- "once_cell",
+ "lazy_static",
  "rand",
  "redis",
  "serde",
