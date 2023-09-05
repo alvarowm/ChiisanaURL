@@ -8,6 +8,7 @@ pub struct Request {
 
 #[derive(Deserialize)]
 pub struct PasswordRequest {
+    pub url: String,
     pub password: String,
 }
 

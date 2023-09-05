@@ -98,12 +98,21 @@ pub async fn post_password_custom_url(r: Request) -> Result<impl warp::Reply, wa
 }
 
 pub async fn post_password_get_url_route(r: PasswordRequest) -> Result<impl warp::Reply, warp::Rejection> {
+    let password = redis_handler::get_value(&r.url, &*crate::STATIC_CONFIG);
+
+    if password.is_empty() || password != r.password{
+        return Ok(reply::with_status(
+            reply::json(&""),
+            StatusCode::FORBIDDEN,
+        ));
+    }
+
     let url_redis = redis_handler::get_value(&r.password, &*crate::STATIC_CONFIG);
 
     if url_redis.is_empty(){
         return Ok(reply::with_status(
             reply::json(&""),
-            StatusCode::NOT_FOUND,
+            StatusCode::FORBIDDEN,
         ));
     }
 
