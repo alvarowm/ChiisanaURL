@@ -15,7 +15,7 @@ pub async fn get_url(min_path : String) -> Result<impl warp::Reply, warp::Reject
     }
 
     if !url_redis.contains(&"/"){
-        return Ok(reply::with_status(reply::json(&"TOP SECRET"), StatusCode::OK));
+        return Ok(reply::with_status(reply::json(&"TOP SECRET"), StatusCode::FORBIDDEN));
     }
 
     return Ok(reply::with_status(reply::json(&url_redis), StatusCode::OK));
