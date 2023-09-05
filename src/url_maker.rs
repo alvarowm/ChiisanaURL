@@ -50,7 +50,7 @@ pub fn get_random_chars(config: &Mutex<HashMap<String, String>>) -> String {
     let binding = config.lock().unwrap();
     let chars: &[u8] = binding.get("chars").unwrap().as_bytes();
     let mut rng = rand::thread_rng();
-    let size: i16 = config.lock().unwrap().get("password_size").unwrap().parse().unwrap();
+    let size: i16 = binding.get("password_size").unwrap().parse().unwrap();
 
     let random_chars: String = (0..size)
         .map(|_| {
