@@ -23,25 +23,32 @@ lazy_static! {
 async fn main() {
     let args: Vec<String> = env::args().collect();
 
-    let mut config_file: String = String::new();
-
-    if !args.is_empty() && args.len() >= 2{
-        for i in 1..args.len() {
-            if args[i-1].contains("-properties") {
-                config_file = args[i].to_string()
-            }
-        }
-    }
+    let config_file:String = read_params(args);
 
     *crate::STATIC_CONFIG.lock().unwrap() = properties_reader::initialize_config(config_file).into();
 
-    let port =  crate::STATIC_CONFIG
+    let port = get_port();
+
+    server::set_and_start_server(port).await;
+}
+
+fn get_port() -> u16 {
+    return crate::STATIC_CONFIG
         .lock()
         .unwrap()
         .get("port")
         .unwrap()
         .parse::<u16>()
-        .unwrap();
+        .unwrap()
+}
 
-    server::set_and_start_server(port).await;
+fn read_params(args: Vec<String>) -> String {
+    if !args.is_empty() && args.len() >= 2 {
+        for i in 1..args.len() {
+            if args[i - 1].contains("-properties") {
+                return args[i].to_string();
+            }
+        }
+    }
+    return "".to_string();
 }
