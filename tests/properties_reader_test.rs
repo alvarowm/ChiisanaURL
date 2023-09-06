@@ -10,7 +10,7 @@ mod properties_reader_test {
         assert_eq!(config.get("port_redis").unwrap(), "6379");
         assert_eq!(config.get("user_redis").unwrap(), "");
 
-        let config =  red_config_from_file(".\\application.properties".to_string());
+        let config =  red_config_from_file("./application.properties".to_string());
         assert_eq!(config.get("password_redis").unwrap(), "");
     }
 

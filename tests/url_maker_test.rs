@@ -33,7 +33,6 @@ mod url_maker_test {
     fn get_generated_url_test(){
         initialize_config("".to_string());
         let generated = get_generated_url(&*STATIC_CONFIG);
-        println!("{}",generated);
         assert_eq!(generated.len(), 14);
         assert_eq!(generated.contains("localhost"), true);
     }
