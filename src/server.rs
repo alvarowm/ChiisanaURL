@@ -1,8 +1,9 @@
-use warp::{Filter};
+use warp::Filter;
 use warp::http::{header, Method};
 use crate::{bodies, get_actions, post_actions, socket_factory};
+use crate::properties_reader::STATIC_CONFIG;
 
-pub async fn set_and_start_server(port:u16)
+pub async fn set_and_start_server()
 {
     let post_url_route = warp::post()
         .and(warp::path::end())
@@ -51,7 +52,21 @@ pub async fn set_and_start_server(port:u16)
         .or(post_password_get_url_route)
         .or(get_url_route).with(cors);
 
+    let port = get_port();
+
     let socket = socket_factory::of(port);
 
     warp::serve(routes).run(socket).await;
+}
+
+pub fn get_port() -> u16 {
+    match STATIC_CONFIG
+        .lock()
+        .unwrap()
+        .get("port") {
+        None => 8080,
+        Some(s) => s
+            .parse::<u16>()
+            .unwrap()
+    }
 }
