@@ -260,7 +260,37 @@ mod url_maker_test {
             .replace("\"", "");
 
         assert_eq!(original_url, "https://www.linkedin.com/in/alvarowm/");
+
+        let response_from_post = client.post("http://localhost:8080/password")
+            .json(&r)
+            .send()
+            .await;
+
+        match response_from_post {
+            Ok(o) => {
+                let returned_json = o
+                    .text()
+                    .await
+                    .unwrap();
+
+                let r: Response= serde_json::from_str(&*returned_json).unwrap();
+
+                let returned_url : String = "http://".to_string() + &*r.url.to_string();
+
+                let get_response = reqwest::get(returned_url)
+                    .await;
+
+                assert_eq!(get_response.unwrap().status(), reqwest::StatusCode::FORBIDDEN);
+
+                return ;
+            }
+            Err(e) => {
+                panic!("{}", e.to_string());
+            }
+        }
     }
+
+
 
 
 }
