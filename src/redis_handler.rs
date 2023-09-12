@@ -1,4 +1,4 @@
-use redis::Commands;
+use redis::{Commands};
 use std::collections::HashMap;
 use std::sync::Mutex;
 
@@ -43,6 +43,13 @@ pub fn get_value(key: &str, config: &Mutex<HashMap<String, String>>) -> String {
     }
 
     return "".to_owned();
+}
+
+pub fn clear_all(config: &Mutex<HashMap<String, String>>) {
+    let client = get_client(config);
+    let mut con: redis::Connection = client.get_connection().unwrap();
+    redis::cmd("flushdb")
+        .execute(&mut con);
 }
 
 fn get_client(config: &Mutex<HashMap<String, String>>) -> redis::Client {

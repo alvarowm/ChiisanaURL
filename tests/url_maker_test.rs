@@ -7,9 +7,9 @@ mod url_maker_test {
     fn get_custom_url_test(){
         initialize_config("".to_string());
         let custom = get_custom_url(&*STATIC_CONFIG, "custom");
-        assert_eq!(custom, "localhost/custom".to_string());
+        assert_eq!(custom, "localhost:8080/custom".to_string());
         let custom = get_custom_url(&*STATIC_CONFIG, "custom2");
-        assert_eq!(custom, "localhost/custom2".to_string());
+        assert_eq!(custom, "localhost:8080/custom2".to_string());
         STATIC_CONFIG.lock().unwrap().insert("base_url".to_string(), "localhost:8080/".to_string());
         let custom = get_custom_url(&*STATIC_CONFIG, "custom");
         assert_eq!(custom, "localhost:8080/custom".to_string());
@@ -20,9 +20,9 @@ mod url_maker_test {
     fn get_base_url_plus_path_test(){
         initialize_config("".to_string());
         let custom = get_base_url_plus_path(&*STATIC_CONFIG, "custom");
-        assert_eq!(custom, "localhost/custom".to_string());
+        assert_eq!(custom, "localhost:8080/custom".to_string());
         let custom = get_base_url_plus_path(&*STATIC_CONFIG, "custom2");
-        assert_eq!(custom, "localhost/custom2".to_string());
+        assert_eq!(custom, "localhost:8080/custom2".to_string());
         STATIC_CONFIG.lock().unwrap().insert("base_url".to_string(), "localhost:8080/".to_string());
         let custom = get_base_url_plus_path(&*STATIC_CONFIG, "custom");
         assert_eq!(custom, "localhost:8080/custom".to_string());
@@ -33,7 +33,7 @@ mod url_maker_test {
     fn get_generated_url_test(){
         initialize_config("".to_string());
         let generated = get_generated_url(&*STATIC_CONFIG);
-        assert_eq!(generated.len(), 14);
+        assert_eq!(generated.len(), 19);
         assert_eq!(generated.contains("localhost"), true);
     }
 
