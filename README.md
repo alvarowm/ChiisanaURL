@@ -30,7 +30,7 @@ chiisanaURL.exe -properties application.properties
 
 Caso não seja indicado um arquivo, o programa irá procurar o arquivo no mesmo local do executável.
 
-O sistema tem 5 endpoints:
+O sistema tem 6 endpoints:
 
 * POST com payload "Request" em / que cria a URL encurtada com base em url;
 * POST com payload "Request" em /custom quer cria a URL encurtada customizada caso não exista ainda a URL;
