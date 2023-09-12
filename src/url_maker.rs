@@ -5,7 +5,7 @@ pub fn get_custom_url(config: &Mutex<HashMap<String, String>>, custom_path: &str
     let binding = config.lock().unwrap();
     let base_url = binding.get("base_url").unwrap();
 
-    if !base_url.ends_with("/"){
+    if !base_url.ends_with("/") {
         base_url.to_owned().push_str("/");
     }
 
@@ -16,7 +16,7 @@ pub fn get_base_url_plus_path(config: &Mutex<HashMap<String, String>>, path: &st
     let binding = config.lock().unwrap();
     let base_url = binding.get("base_url").unwrap();
 
-    if !base_url.ends_with("/"){
+    if !base_url.ends_with("/") {
         base_url.to_owned().push_str("/");
     }
 
@@ -38,7 +38,7 @@ pub fn get_generated_url(config: &Mutex<HashMap<String, String>>) -> String {
         .collect();
     let base_url = binding.get("base_url").unwrap();
 
-    if !base_url.ends_with("/"){
+    if !base_url.ends_with("/") {
         base_url.to_owned().push_str("/");
     }
 

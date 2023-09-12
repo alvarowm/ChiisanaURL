@@ -1,6 +1,7 @@
 #[cfg(test)]
 mod url_maker_test {
     use std::collections::HashMap;
+
     use chiisana_url::properties_reader::*;
     use chiisana_url::redis_handler::clear_all;
     use chiisana_url::response::Response;
@@ -12,7 +13,7 @@ mod url_maker_test {
     }
 
     #[tokio::test]
-    async fn post_url_test(){
+    async fn post_url_test() {
         initialize();
 
         let mut r = HashMap::new();
@@ -43,8 +44,8 @@ mod url_maker_test {
                     .await
                     .unwrap()
                     .replace("\"", "");
-                assert_eq!(returned_url.to_string().contains("localhost"),true);
-                assert_eq!(returned_url.len(),19);
+                assert_eq!(returned_url.to_string().contains("localhost"), true);
+                assert_eq!(returned_url.len(), 19);
                 assert_ne!(returned_url, returned_url_2);
             }
             Err(e) => {
@@ -54,7 +55,7 @@ mod url_maker_test {
     }
 
     #[tokio::test]
-    async fn post_custom_url_test(){
+    async fn post_custom_url_test() {
         initialize();
 
         let mut r = HashMap::new();
@@ -80,7 +81,7 @@ mod url_maker_test {
                     .text()
                     .await
                     .unwrap().replace("\"", "");
-                assert_eq!(returned_url.to_string(),"localhost:8080/test");
+                assert_eq!(returned_url.to_string(), "localhost:8080/test");
                 assert_eq!(response2.unwrap().status(), reqwest::StatusCode::CONFLICT);
             }
             Err(e) => {
@@ -90,7 +91,7 @@ mod url_maker_test {
     }
 
     #[tokio::test]
-    async fn post_password_url_test(){
+    async fn post_password_url_test() {
         initialize();
 
         let mut r = HashMap::new();
@@ -113,7 +114,7 @@ mod url_maker_test {
             .await
             .unwrap();
 
-        let response_from_post2:Response = serde_json::from_str(&*response_from_post2).unwrap();
+        let response_from_post2: Response = serde_json::from_str(&*response_from_post2).unwrap();
 
         match response_from_post {
             Ok(o) => {
@@ -122,16 +123,16 @@ mod url_maker_test {
                     .await
                     .unwrap();
 
-                let r: Response= serde_json::from_str(&*returned_json).unwrap();
+                let r: Response = serde_json::from_str(&*returned_json).unwrap();
 
-                assert_eq!(r.url.contains("localhost"),true);
-                assert_eq!(r.password.to_string().len(),8);
-                assert_eq!(r.url.len(),19);
+                assert_eq!(r.url.contains("localhost"), true);
+                assert_eq!(r.password.to_string().len(), 8);
+                assert_eq!(r.url.len(), 19);
 
-                assert_ne!(r.password.to_string(),response_from_post2.password);
-                assert_ne!(r.url.to_string(),response_from_post2.url);
+                assert_ne!(r.password.to_string(), response_from_post2.password);
+                assert_ne!(r.url.to_string(), response_from_post2.url);
 
-                return ;
+                return;
             }
             Err(e) => {
                 panic!("{}", e.to_string());
@@ -140,7 +141,7 @@ mod url_maker_test {
     }
 
     #[tokio::test]
-    async fn post_password_custom_url_test(){
+    async fn post_password_custom_url_test() {
         initialize();
 
         let mut r = HashMap::new();
@@ -167,12 +168,12 @@ mod url_maker_test {
                     .await
                     .unwrap();
 
-                let r: Response= serde_json::from_str(&*returned_json).unwrap();
+                let r: Response = serde_json::from_str(&*returned_json).unwrap();
 
-                assert_eq!(r.url.contains("localhost"),true);
-                assert_eq!(r.password.to_string().len(),8);
+                assert_eq!(r.url.contains("localhost"), true);
+                assert_eq!(r.password.to_string().len(), 8);
                 assert_eq!(response_from_post_2.unwrap().status(), reqwest::StatusCode::CONFLICT);
-                return ;
+                return;
             }
             Err(e) => {
                 panic!("{}", e.to_string());
@@ -181,7 +182,7 @@ mod url_maker_test {
     }
 
     #[tokio::test]
-    async fn post_password_get_url_route_test(){
+    async fn post_password_get_url_route_test() {
         initialize();
 
         let mut r = HashMap::new();
@@ -199,7 +200,7 @@ mod url_maker_test {
             .await
             .unwrap();
 
-        let r_json: Response= serde_json::from_str(&*response_from_post).unwrap();
+        let r_json: Response = serde_json::from_str(&*response_from_post).unwrap();
 
         let mut r = HashMap::new();
         r.insert("url", r_json.url.clone());
@@ -221,7 +222,7 @@ mod url_maker_test {
                 let r = r.replace("\"", "");
 
                 assert_eq!(r, "https://www.linkedin.com/in/alvarowm/");
-                return ;
+                return;
             }
             Err(e) => {
                 panic!("{}", e.to_string());
@@ -230,7 +231,7 @@ mod url_maker_test {
     }
 
     #[tokio::test]
-    async fn get_url_test(){
+    async fn get_url_test() {
         initialize();
 
         let mut r = HashMap::new();
@@ -249,7 +250,7 @@ mod url_maker_test {
             .unwrap()
             .replace("\"", "");
 
-        let returned_url : String = "http://".to_string() + &*returned_url.to_string();
+        let returned_url: String = "http://".to_string() + &*returned_url.to_string();
 
         let original_url = reqwest::get(returned_url)
             .await
@@ -273,24 +274,20 @@ mod url_maker_test {
                     .await
                     .unwrap();
 
-                let r: Response= serde_json::from_str(&*returned_json).unwrap();
+                let r: Response = serde_json::from_str(&*returned_json).unwrap();
 
-                let returned_url : String = "http://".to_string() + &*r.url.to_string();
+                let returned_url: String = "http://".to_string() + &*r.url.to_string();
 
                 let get_response = reqwest::get(returned_url)
                     .await;
 
                 assert_eq!(get_response.unwrap().status(), reqwest::StatusCode::FORBIDDEN);
 
-                return ;
+                return;
             }
             Err(e) => {
                 panic!("{}", e.to_string());
             }
         }
     }
-
-
-
-
 }

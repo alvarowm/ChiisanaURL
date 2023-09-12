@@ -24,6 +24,7 @@ password_size=8
 * password_size -> tamanho do password gerado com base em chars;
 
 Para inicializar o encurtador com o seu arquivo properties :
+
 ```
 chiisanaURL.exe -properties application.properties
 ```
@@ -35,10 +36,11 @@ O sistema tem 6 endpoints:
 * POST com payload "Request" em / que cria a URL encurtada com base em url;
 * POST com payload "Request" em /custom quer cria a URL encurtada customizada caso não exista ainda a URL;
 * POST com payload "Request" em /password que cria a URL encurtada com base em url e devolve a senha;
-* POST com payload "Request" em /post_password_custom_url que cria a URL encurtada com base em custom_path e devolve a senha;
+* POST com payload "Request" em /post_password_custom_url que cria a URL encurtada com base em custom_path e devolve a
+  senha;
 * POST com payload "PasswordRequest" em /code devolve a URL protegida por senha;
 * GET que recebe uma String representando o path encurtado em / e devolve url.
-   Caso a URL esteja protegida por senha a requisição irá retornar "TOP SECRET".
+  Caso a URL esteja protegida por senha a requisição irá retornar "TOP SECRET".
 
 Payloads:
 
@@ -55,6 +57,7 @@ Request -> {
 ```
 
 Resposta:
+
 ```
 Response -> {
     "url" : "localhost/12X34",

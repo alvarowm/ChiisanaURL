@@ -1,6 +1,7 @@
-use redis::{Commands};
 use std::collections::HashMap;
 use std::sync::Mutex;
+
+use redis::Commands;
 
 fn setup_and_get_client(
     redis_endpoint: &str,
@@ -21,7 +22,7 @@ fn setup_and_get_client(
                 + redis_port
                 + "/",
         )
-        .unwrap();
+            .unwrap();
     } else {
         client =
             redis::Client::open("redis://".to_owned() + redis_endpoint + ":" + redis_port + "/")
@@ -53,7 +54,6 @@ pub fn clear_all(config: &Mutex<HashMap<String, String>>) {
 }
 
 fn get_client(config: &Mutex<HashMap<String, String>>) -> redis::Client {
-
     let binding = config.lock().unwrap();
 
     let redis_endpoint: &str = binding.get("endpoint_redis").unwrap();
