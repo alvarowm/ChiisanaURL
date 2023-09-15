@@ -8,7 +8,7 @@ async fn main() {
     let args: Vec<String> = env::args().collect();
     let config_file = param_reader::read_params(args);
     properties_reader::initialize_config(config_file);
-    println!("");
+    println!();
     println!("               小                          さ                       な  ");
     println!("               _____                       _____                   _____  ");
     println!("             / \\    \\                   / \\     \\                 /\\    \\");
@@ -31,7 +31,7 @@ async fn main() {
     println!("            \\::::/    /               \\::|    |                 \\:::\\____\\");
     println!("             \\::/____/                 \\:|    |                  \\::/    /");
     println!("              ~~                        \\|____|                   \\/____/");
-    println!("");
+    println!();
     println!("v{}", env!("CARGO_PKG_VERSION"));
     println!("{}", "Running on port: ".to_string() + STATIC_CONFIG.lock().unwrap().get("port").unwrap());
 
