@@ -111,44 +111,42 @@
 <script>
     // Quando o botão "Abrir Modal" for clicado
     $('#openModalButton').on('click', function () {
-	
-    axios.post('http://localhost:8080/', {
-    url : document.getElementById('inputLink1').value,
-    custom_path : ""
-  }, {
-  headers: {
-           "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Headers": "Content-type", 
-          "Access-Control-Allow-Methods": "GET, POST" ,
-          "Content-Type": "application/json"       
-      }
-  }
-  
-  )
-  .then(function (response) {
-		// Atualize o conteúdo das abas no modal
-        $('#linkContent').text(response.data);
-		var a = document.getElementById('linkContent');
-		a.href = "http://" + document.getElementById('inputLink1').value;
-		document.getElementById("qrcodeContent").innerHTML = ""
-        var qrcode = new QRCode(document.getElementById('qrcodeContent'), {
-            text: response.data,
-            width: 128,
-            height: 128
-        });
-        
-        // Abra o modal
-        $('#myModal').modal('show');
-  
-    console.log(response);
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
-	
-	
-  
-});
+
+        axios.post('http://localhost:8080/', {
+                url: document.getElementById('inputLink1').value,
+                custom_path: ""
+            }, {
+                headers: {
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Headers": "Content-type",
+                    "Access-Control-Allow-Methods": "GET, POST",
+                    "Content-Type": "application/json"
+                }
+            }
+        )
+            .then(function (response) {
+                // Atualize o conteúdo das abas no modal
+                $('#linkContent').text(response.data);
+                var a = document.getElementById('linkContent');
+                a.href = "http://" + document.getElementById('inputLink1').value;
+                document.getElementById("qrcodeContent").innerHTML = ""
+                var qrcode = new QRCode(document.getElementById('qrcodeContent'), {
+                    text: response.data,
+                    width: 128,
+                    height: 128
+                });
+
+                // Abra o modal
+                $('#myModal').modal('show');
+
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
+
+    });
 
 </script>
 
