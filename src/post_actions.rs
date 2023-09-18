@@ -67,7 +67,7 @@ pub async fn post_password_url(r: Request) -> Result<impl warp::Reply, warp::Rej
 
     let resp = Response {
         url: generated_url,
-        password: password,
+        password,
     };
 
     return Ok(reply::with_status(reply::json(&resp), StatusCode::OK));
@@ -93,7 +93,7 @@ pub async fn post_password_custom_url(r: Request) -> Result<impl warp::Reply, wa
 
     let resp = Response {
         url: custom_url,
-        password: password,
+        password,
     };
 
     return Ok(reply::with_status(reply::json(&resp), StatusCode::OK));
