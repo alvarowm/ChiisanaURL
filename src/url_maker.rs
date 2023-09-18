@@ -24,18 +24,11 @@ pub fn get_base_url_plus_path(config: &Mutex<HashMap<String, String>>, path: &st
 }
 
 pub fn get_generated_url(config: &Mutex<HashMap<String, String>>) -> String {
-    use rand::Rng;
     let binding = config.lock().unwrap();
     let chars: &[u8] = binding.get("chars").unwrap().as_bytes();
     let url_length: usize = binding.get("path_length").unwrap().parse().unwrap();
-    let mut rng = rand::thread_rng();
+    let sufix: String = get_random_chars_with_len(url_length, chars);
 
-    let sufix: String = (0..url_length)
-        .map(|_| {
-            let idx = rng.gen_range(0..chars.len());
-            chars[idx] as char
-        })
-        .collect();
     let base_url = binding.get("base_url").unwrap();
 
     if !base_url.ends_with("/") {
@@ -46,17 +39,23 @@ pub fn get_generated_url(config: &Mutex<HashMap<String, String>>) -> String {
 }
 
 pub fn get_random_chars(config: &Mutex<HashMap<String, String>>) -> String {
-    use rand::Rng;
     let binding = config.lock().unwrap();
     let chars: &[u8] = binding.get("chars").unwrap().as_bytes();
-    let mut rng = rand::thread_rng();
     let size: i16 = binding.get("password_size").unwrap().parse().unwrap();
 
-    let random_chars: String = (0..size)
+    let random_chars: String = get_random_chars_with_len(size as usize, chars);
+
+    return random_chars;
+}
+
+
+fn get_random_chars_with_len (length: usize, chars: &[u8]) -> String{
+    let mut rng = rand::thread_rng();
+    use rand::Rng;
+    (0..length)
         .map(|_| {
             let idx = rng.gen_range(0..chars.len());
             chars[idx] as char
         })
-        .collect();
-    return random_chars;
+        .collect()
 }
