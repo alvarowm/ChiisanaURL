@@ -203,8 +203,8 @@ mod url_maker_test {
         let r_json: Response = serde_json::from_str(&*response_from_post).unwrap();
 
         let mut r = HashMap::new();
-        r.insert("url", r_json.url.clone());
-        r.insert("password", r_json.password.clone());
+        r.insert("url", &r_json.url);
+        r.insert("password", &r_json.password);
 
         let response_from_post = client.post("http://localhost:8080/code")
             .json(&r)

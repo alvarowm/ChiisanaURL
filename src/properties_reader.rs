@@ -13,7 +13,7 @@ lazy_static! {
 pub fn red_config_from_file(file: String) -> HashMap<String, String> {
     let config_file = if !file.is_empty() { file } else { "./application.properties".to_string() };
 
-    let file = match File::open(config_file.clone()) {
+    let file = match File::open(&config_file) {
         Err(why) => panic!("There was a error opening {}: {}", config_file, why),
         Ok(file) => file,
     };
