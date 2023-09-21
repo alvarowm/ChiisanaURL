@@ -33,7 +33,7 @@ async fn main() {
     println!("              ~~                        \\|____|                   \\/____/");
     println!();
     println!("v{}", env!("CARGO_PKG_VERSION"));
-    println!("{}", "Running on port: ".to_string() + STATIC_CONFIG.lock().unwrap().get("port").unwrap());
+    println!("{}", "Running on port: ".to_owned() + STATIC_CONFIG.lock().unwrap().get("port").unwrap());
 
     server::set_and_start_server().await;
 }

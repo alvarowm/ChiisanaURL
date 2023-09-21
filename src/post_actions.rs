@@ -35,7 +35,6 @@ pub async fn post_custom_url(r: Request) -> Result<impl warp::Reply, warp::Rejec
 
     let url_redis = redis_handler::get_value(&custom_url, &*STATIC_CONFIG);
 
-
     if !url_redis.is_empty() {
         return Ok(reply::with_status(
             reply::json(&custom_url),

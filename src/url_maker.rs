@@ -3,24 +3,26 @@ use std::sync::Mutex;
 
 pub fn get_custom_url(config: &Mutex<HashMap<String, String>>, custom_path: &str) -> String {
     let binding = config.lock().unwrap();
-    let base_url = binding.get("base_url").unwrap();
+    let mut base_url = binding.get("base_url").unwrap().clone();
 
     if !base_url.ends_with("/") {
-        base_url.to_owned().push_str("/");
+        base_url.push_str("/");
     }
 
-    return base_url.to_owned() + custom_path;
+    base_url.push_str(custom_path);
+    return base_url.to_owned();
 }
 
 pub fn get_base_url_plus_path(config: &Mutex<HashMap<String, String>>, path: &str) -> String {
     let binding = config.lock().unwrap();
-    let base_url = binding.get("base_url").unwrap();
+    let mut base_url = binding.get("base_url").unwrap().clone();
 
     if !base_url.ends_with("/") {
-        base_url.to_owned().push_str("/");
+        base_url.push_str("/");
     }
 
-    return base_url.to_owned() + path;
+    base_url.push_str(path);
+    return base_url.to_owned();
 }
 
 pub fn get_generated_url(config: &Mutex<HashMap<String, String>>) -> String {
@@ -29,13 +31,14 @@ pub fn get_generated_url(config: &Mutex<HashMap<String, String>>) -> String {
     let url_length: usize = binding.get("path_length").unwrap().parse().unwrap();
     let sufix: String = get_random_chars_with_len(url_length, chars);
 
-    let base_url = binding.get("base_url").unwrap();
+    let mut base_url = binding.get("base_url").unwrap().clone();
 
     if !base_url.ends_with("/") {
-        base_url.to_owned().push_str("/");
+        base_url.push_str("/");
     }
 
-    return base_url.to_owned() + &sufix;
+    base_url.push_str(&sufix);
+    return base_url.to_owned();
 }
 
 pub fn get_random_chars(config: &Mutex<HashMap<String, String>>) -> String {

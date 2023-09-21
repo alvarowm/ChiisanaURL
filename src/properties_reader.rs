@@ -11,7 +11,7 @@ lazy_static! {
 }
 
 pub fn red_config_from_file(file: String) -> HashMap<String, String> {
-    let config_file = if !file.is_empty() { file } else { "./application.properties".to_string() };
+    let config_file = if !file.is_empty() { file } else { "./application.properties".to_owned() };
 
     let file = match File::open(&config_file) {
         Err(why) => panic!("There was a error opening {}: {}", config_file, why),
